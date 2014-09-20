@@ -1,6 +1,6 @@
 {
   "name": "compute-polynomial",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Evaluates a polynomial.",
   "author": {
     "name": "Athan Reines",
