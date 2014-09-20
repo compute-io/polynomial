@@ -19,14 +19,33 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var lib = require( 'compute-polynomial' );
+var polyval = require( 'compute-polynomial' );
 ```
+
+The method requires two input arguments: an `array` of coefficients and either a single `numeric` value or an `array` of values at which to evaluate the polynomial.
+
+The coefficients should be ordered in descending degree. For example, for a polynomial `a_nx^n + a_(n-1)x^(n-1) + ... + a_1x^1 + a_0x^0`, the coefficients would be `[a_n, a_(n-1),..., a_1, a_0]`.
 
 
 ## Examples
 
 ``` javascript
-var lib = require( 'compute-polynomial' );
+var coef = new Array( 25 ),
+	sign;
+
+for ( var i = 0; i < coef.length; i++ ) {
+	sign = 1;
+	if ( Math.random()-0.5 < 0 ) {
+		sign = -1;
+	}
+	coef[ i ] = sign * Math.round( Math.random()*i );
+}
+
+// Evaluate the polynomial at a single value:
+console.log( polyval( coef, 10 ) );
+
+// Evaluate the polynomial at multiple values:
+console.log( polyval( coef, [ 10, -10 ] ) );
 ```
 
 To run the example code from the top-level application directory,
@@ -34,6 +53,11 @@ To run the example code from the top-level application directory,
 ``` bash
 $ node ./examples/index.js
 ```
+
+
+## Notes
+
+This method implements [Horner's rule](http://en.wikipedia.org/wiki/Horner's_method) to achieve efficient computation.
 
 
 ## Tests

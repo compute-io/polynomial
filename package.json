@@ -25,7 +25,12 @@
   "keywords": [
     "compute.io",
     "compute",
-    "computation"
+    "computation",
+    "polynomial",
+    "evaluate",
+    "horner",
+    "polyval",
+    "math"
   ],
   "bugs": {
     "url": "https://github.com/compute-io/polynomial/issues"
