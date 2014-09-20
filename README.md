@@ -24,7 +24,17 @@ var polyval = require( 'compute-polynomial' );
 
 The method requires two input arguments: an `array` of coefficients and either a single `numeric` value or an `array` of values at which to evaluate the polynomial.
 
-The coefficients should be ordered in descending degree. For example, for a polynomial `a_nx^n + a_(n-1)x^(n-1) + ... + a_1x^1 + a_0x^0`, the coefficients would be `[a_n, a_(n-1),..., a_1, a_0]`.
+The coefficients should be ordered in descending degree. For example, for a polynomial
+
+```
+a_nx^n + a_(n-1)x^(n-1) + ... + a_1x^1 + a_0x^0
+```
+
+the coefficients would be
+
+```
+[a_n, a_(n-1),..., a_1, a_0]
+```
 
 Consider the polynomial `4x^3 + 2x^2 + 6x - 17`. To evaluate the polynomial at a single value,
 
