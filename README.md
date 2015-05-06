@@ -16,13 +16,14 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 
 ## Usage
 
-To use the module,
-
 ``` javascript
 var polyval = require( 'compute-polynomial' );
 ```
 
-The method requires two input arguments: an `array` of coefficients and either a single `numeric` value or an `array` of values at which to evaluate the polynomial.
+
+#### polyval( coef, x[, options] )
+
+Evaluates a polynomial whose coefficients are defined by `coef`. `x` may be either a single `numeric` value or an `array` of values at which to evaluate to the polynomial.
 
 The coefficients should be ordered in __descending__ degree. For example, for a polynomial
 
@@ -39,21 +40,64 @@ the coefficients would be
 Consider the polynomial `4x^3 + 2x^2 + 6x - 17`. To evaluate the polynomial at a single value,
 
 ``` javascript
-polyval( [ 4, 2, 6, -17 ], 10 );
+var val = polyval( [ 4, 2, 6, -17 ], 10 );
 // returns 4243
 ```
 
 To evaluate the polynomial at multiple values,
 
 ``` javascript
-polyval( [ 4, 2, 6, -17 ], [ 10, -3 ] );
+var vals = polyval( [ 4, 2, 6, -17 ], [ 10, -3 ] );
 // returns [ 4243, -125 ]
 ```
+
+When provided an input `array`, the function accepts the following `options`:
+
+*	__copy__: `boolean` indicating whether to return a new `array`. Default: `true`.
+*	__accessor__: accessor `function` for accessing numeric values in object `arrays`.
+
+To mutate the input `array` (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
+
+``` javascript
+var coefs = [ 4, 2, 6, -17 ],
+	x = [ 10, -3 ];
+
+var vals = polyval( coefs, x, {
+	'copy': false
+});
+// returns [ 4243, -125 ]
+
+console.log( x === vals );
+// returns true
+```
+
+For object `arrays`, provide an accessor `function` for accessing `array` values.
+
+``` javascript
+var coefs = [ 4, 2, 6, -17 ];
+
+var data = [
+	['beep', 10],
+	['boop', -3]
+];
+
+function getValue( d, i ) {
+	return d[ 1 ];
+}
+
+var vals = polyval( coefs, data, {
+	'accessor': getValue
+});
+// returns [ 4243, -125 ]
+```
+
 
 
 ## Examples
 
 ``` javascript
+var polyval = require( 'compute-polynomial' );
+
 var coef = new Array( 25 ),
 	sign;
 
@@ -88,7 +132,7 @@ This method implements [Horner's rule](http://en.wikipedia.org/wiki/Horner's_met
 
 ### Unit
 
-Unit tests use the [Mocha](http://visionmedia.github.io/mocha) test framework with [Chai](http://chaijs.com) assertions. To run the tests, execute the following command in the top-level application directory:
+Unit tests use the [Mocha](http://mochajs.org) test framework with [Chai](http://chaijs.com) assertions. To run the tests, execute the following command in the top-level application directory:
 
 ``` bash
 $ make test
@@ -108,19 +152,19 @@ $ make test-cov
 Istanbul creates a `./reports/coverage` directory. To access an HTML version of the report,
 
 ``` bash
-$ open reports/coverage/lcov-report/index.html
+$ make view-cov
 ```
 
 
+---
 ## License
 
 [MIT license](http://opensource.org/licenses/MIT). 
 
 
----
 ## Copyright
 
-Copyright &copy; 2014. Athan Reines.
+Copyright &copy; 2014-2015. Athan Reines.
 
 
 [npm-image]: http://img.shields.io/npm/v/compute-polynomial.svg

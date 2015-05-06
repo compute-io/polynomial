@@ -1,9 +1,10 @@
+'use strict';
+
 var polyval = require( './../lib' ),
 	coef,
 	sign;
 
 coef = new Array( 25 );
-
 for ( var i = 0; i < coef.length; i++ ) {
 	sign = 1;
 	if ( Math.random()-0.5 < 0 ) {
